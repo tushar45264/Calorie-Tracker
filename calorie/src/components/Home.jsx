@@ -39,7 +39,7 @@ const Home = () => {
     
     event.preventDefault(); 
    try {
-    const res = await fetch(`http://localhost:5000/api/user/update/${user?._id}`, {
+    const res = await fetch(`https://calorie-tracker-mrnl.onrender.com/api/user/update/${user?._id}`, {
       method: 'PATCH',
       credentials:'include',
       headers: {
@@ -50,10 +50,10 @@ const Home = () => {
     const data = await res.json();
     if(data)
     { 
-       const height =data.updatedUser.height;
-      const weight =data.updatedUser.weight
+      const height =data?.updatedUser?.height;
+      const weight =data?.updatedUser?.weight
       const BMI =weight/(height*height/10000);
-      const age=data.updatedUser.age;
+      const age=data?.updatedUser?.age;
       const BMR=66.47+((13.75*weight))+((5.003*height))-(6.755&age);
       localStorage.setItem('BMI', BMI);
       localStorage.setItem('BMR', BMR);

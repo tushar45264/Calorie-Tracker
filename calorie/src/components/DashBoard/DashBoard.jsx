@@ -8,7 +8,7 @@ import gainImg from '../../images/gain-weight.png';
 
 const DashBoardContent = React.forwardRef((props, ref) => {
   const {_id} = JSON.parse(localStorage.getItem('User'));
-  const BMI = localStorage.getItem('BMI').slice(0, 5);
+  const BMI = localStorage.getItem('BMI')?.slice(0, 5);
   const BMR = localStorage.getItem('BMR');
   const [weeklyCalories, setWeeklyCalories] = useState([]);
   const [totalCalories, setTotalCalories] = useState(0);
@@ -17,7 +17,7 @@ const DashBoardContent = React.forwardRef((props, ref) => {
   useEffect(() => {
     const fetchCalories = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/calorie/weeklyCalorieIntake/${_id}`, {
+        const res = await fetch(`https://calorie-tracker-mrnl.onrender.com/api/calorie/weeklyCalorieIntake/${_id}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -26,7 +26,7 @@ const DashBoardContent = React.forwardRef((props, ref) => {
         });
         const data = await res.json();
         if (data) {
-          setWeeklyCalories(data.weeklyCalories.map(calorie => calorie.calories));
+          setWeeklyCalories(data?.weeklyCalories?.map(calorie => calorie.calories));
           setTotalCalories(data.totalCalories);
           setAverageCalories(data.averageCalories);
         }
@@ -45,7 +45,7 @@ const DashBoardContent = React.forwardRef((props, ref) => {
             <div className='grid md:grid-cols-3 gap-4 mx-4'>
                 <div className='border flex flex-row item-center border-gray-200 rounded my-2 md:my-4 py-4 pl-4 bg-green-200'>
                     <h1 className='text-5xl font-bold text-black'>
-                        {totalCalories.toFixed(0)}
+                        {totalCalories?.toFixed(0)}
                     </h1>
                     <div className=''>
                         <h1 className='ml-4'>
@@ -58,7 +58,7 @@ const DashBoardContent = React.forwardRef((props, ref) => {
                 </div>
                 <div className='border flex flex-row item-center border-gray-200 rounded my-2 md:my-4 py-4 pl-4 bg-blue-200'>
                     <h1 className='text-5xl font-bold text-black'>
-                       {averageCalories.toFixed(0)}
+                       {averageCalories?.toFixed(0)}
                     </h1>
                     <div className=''>
                         <h1 className='ml-4'>
@@ -97,21 +97,21 @@ const DashBoardContent = React.forwardRef((props, ref) => {
                         <h1 className=' self-center text-2xl font-semibold text-gray-700'>Lose Weight</h1>
                         <img src={obesityImg} alt='lose' className='h-10 w-10 self-center' />
                         <h1 className=' text-xl font-semibold self-center'>Calorie intake per day</h1>
-                        <h1 className=' text-xl font-semibold self-center'>{(BMR*1.1).toFixed(0)-200}-{(BMR*1.1).toFixed(0)}</h1>
+                        <h1 className=' text-xl font-semibold self-center'>{(BMR*1.1)?.toFixed(0)-200}-{(BMR*1.1)?.toFixed(0)}</h1>
                         <h1 className='text-md text-center'>This range of daily calories will enable you to lose 1-2 lb per week in a healthy and sustainable way.</h1>
                     </div>
                     <div className=' flex flex-col border border-gray-300 rounded py-4 px-2'>
                         <h1 className=' self-center text-2xl font-semibold text-gray-700'>Maintain weight</h1>
                         <img src={maintainImg} alt='lose' className='h-10 w-10 self-center' />
                         <h1 className=' text-xl font-semibold self-center'>Calorie intake per day</h1>
-                        <h1 className=' text-xl font-semibold self-center'>{(BMR*1.375-200).toFixed(0)}-{(BMR*1.375).toFixed(0)}</h1>
+                        <h1 className=' text-xl font-semibold self-center'>{(BMR*1.375-200)?.toFixed(0)}-{(BMR*1.375)?.toFixed(0)}</h1>
                         <h1 className='text-md text-center'>This range of daily calories will enable you to maintain your current weight.</h1>
                     </div>
                     <div className=' flex flex-col border border-gray-300 rounded py-4 px-2'>
                         <h1 className=' self-center text-2xl font-semibold text-gray-700'>Gain weight</h1>
                         <img src={gainImg} alt='lose' className='h-10 w-10 self-center' />
                         <h1 className=' text-xl font-semibold self-center'>Calorie intake per day</h1>
-                        <h1 className=' text-xl font-semibold self-center'>{(BMR*1.55).toFixed(0)-200}-{(BMR*1.55).toFixed(0)}</h1>
+                        <h1 className=' text-xl font-semibold self-center'>{(BMR*1.55)?.toFixed(0)-200}-{(BMR*1.55)?.toFixed(0)}</h1>
                         <h1 className='text-md text-center'>This range of daily calories will enable you to gain 1-2 lb per week.</h1>
                     </div>
             </div>
@@ -133,7 +133,7 @@ const DashBoard = () => {
   useEffect(() => {
     const _id = JSON.parse(localStorage.getItem('User'))._id;
     const fetchDataForCSV = async () => {
-      const res = await fetch(`http://localhost:5000/api/calorie/weeklyCalorieIntake/${_id}`, {
+      const res = await fetch(`https://calorie-tracker-mrnl.onrender.com/api/calorie/weeklyCalorieIntake/${_id}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -144,7 +144,7 @@ const DashBoard = () => {
       if (data) {
         setDataForCSV([
           {
-            WeeklyCalories: data.weeklyCalories.map(calorie => calorie.calories).join(", "),
+            WeeklyCalories: data?.weeklyCalories?.map(calorie => calorie.calories).join(", "),
             TotalCalories: data.totalCalories,
             AverageCalories: data.averageCalories,
           }

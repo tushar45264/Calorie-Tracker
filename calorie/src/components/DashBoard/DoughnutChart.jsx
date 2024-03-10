@@ -11,7 +11,7 @@ const ChartsContainer = () => {
     useEffect(() => {
       const fetchCalories = async () => {
         try {
-          const res = await fetch(`http://localhost:5000/api/calorie/weeklyCalorieIntake/${_id}`, {
+          const res = await fetch(`https://calorie-tracker-mrnl.onrender.com/api/calorie/weeklyCalorieIntake/${_id}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -20,7 +20,7 @@ const ChartsContainer = () => {
           });
           const data = await res.json();
           if (data) {
-            const weeklyIntake = data.weeklyCalories.map(calorie => calorie.calories);
+            const weeklyIntake = data?.weeklyCalories.map(calorie => calorie.calories);
             setWeeklyCalories(weeklyIntake);
             setTotalCalories(data.totalCalories);
             setAverageCalories(data.averageCalories);

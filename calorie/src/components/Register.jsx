@@ -17,7 +17,7 @@ const Register = () => {
     }
 
     try {
-      const response =await fetch('http://localhost:5000/api/auth/signup', {
+      const response =await fetch('https://calorie-tracker-mrnl.onrender.com/api/auth/signup', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -29,7 +29,6 @@ const Register = () => {
       if(data){
         navigate('/details');
         localStorage.setItem('User', JSON.stringify(data.newUser));
-        
       }
     } catch(err){
       console.log('error',err);
