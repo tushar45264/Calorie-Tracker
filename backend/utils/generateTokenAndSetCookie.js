@@ -8,7 +8,9 @@ export const generateTokenAndSetCookie = (userId, res) => {
         expires: new Date(
             Date.now() + 30 * 24 * 60 * 60 * 1000
         ),
-        httpOnly: true
+        httpOnly: true,
+        samesite: "none",
+        secure: true,
     };
     res.cookie("token", token, cookieOptions);
 }
