@@ -9,7 +9,8 @@ import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const user = JSON.parse(localStorage.getItem('User'));
+  const {_id} = (localStorage.getItem('User'));
+  console.log(_id);
   const navigate = useNavigate();
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
@@ -39,7 +40,7 @@ const Home = () => {
     
     event.preventDefault(); 
    try {
-    const res = await fetch(`https://calorie-tracker-mrnl.onrender.com/api/user/update/${user?._id}`, {
+    const res = await fetch(`https://calorie-tracker-mrnl.onrender.com/api/user/update/${_id}`, {
       method: 'PATCH',
       credentials:'include',
       headers: {
